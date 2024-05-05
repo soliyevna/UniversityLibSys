@@ -8,4 +8,5 @@ namespace UniversityLibrarySystem.DataAccess.Interfaces;
 /// </summary>
 public interface IStudentRepository: IBaseRepository<Student>
 {
+    public Task<List<Student>> GetAllAsync();
 }

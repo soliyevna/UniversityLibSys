@@ -23,4 +23,10 @@ public class StudentService : IStudentService
         await _unitOfWork.SaveAsync();
         return res;
     }
+
+    public Task<List<Student>> GetAllAsync()
+    {
+        var res = _unitOfWork.StudentRepository.GetAllAsync();
+        return res;
+    }
 }

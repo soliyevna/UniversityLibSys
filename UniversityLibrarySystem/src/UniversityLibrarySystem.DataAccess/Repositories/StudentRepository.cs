@@ -1,4 +1,5 @@
-﻿using UniversityLibrarySystem.DataAccess.DbContexts;
+﻿using Microsoft.EntityFrameworkCore;
+using UniversityLibrarySystem.DataAccess.DbContexts;
 using UniversityLibrarySystem.DataAccess.Interfaces;
 using UniversityLibrarySystem.DataAccess.Repositories.Common;
 using UniversityLibrarySystem.Domain.Entites;
@@ -17,5 +18,11 @@ public class StudentRepository: BaseRepository<Student>, IStudentRepository
     public StudentRepository(DataContext dataContext): base(dataContext)
     {
         
+    }
+
+    public async Task<List<Student>> GetAllAsync()
+    {
+        var res = await Collection.AsNoTracking().OrderBy(s => s.Name).ToListAsync();
+        return res;
     }
 }

@@ -1,0 +1,31 @@
+﻿@using UniversityLibrarySystem.Domain.Entites;
+@model List<Student>;
+
+<div class="container mt-5">
+    <h2>Student List</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Model)
+            {
+                <tr>
+                    <td>@student.Name</td>
+                    <td>@student.Address</td>
+                    <td>@student.Email</td>
+                    <td>
+                        <button type="button" class="btn btn-primary">Update</button>
+                        <button type="button" class="btn btn-danger">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<!-- Bootstrap JS (optional if you need to use Bootstrap JavaScript features) -->

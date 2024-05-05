@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using UniversityLibrarySystem.Domain.Entites;
 using UniversityLibrarySystem.Service.Dtos;
 using UniversityLibrarySystem.Service.Interfaces;
 
@@ -13,10 +14,11 @@ public class StudentController : Controller
     {
         this._studentService = studentService;
     }
-    public IActionResult Index()
+
+    /*public IActionResult Index()
     {
         return View();
-    }
+    }*/
 
     [HttpGet("create")]
     public ViewResult Create()
@@ -34,7 +36,7 @@ public class StudentController : Controller
             int res = await _studentService.CreateStudentAsync(studentCreateDto);
             if(res > 0)
             {
-                return RedirectToAction("Index", "Home", new { area = "" });
+                return RedirectToAction("Index", "Home");
             }
             else
             {
@@ -42,5 +44,12 @@ public class StudentController : Controller
             }
         }
         return Create();
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Index()
+    {
+        List<Student> students = await _studentService.GetAllAsync();
+        return View(students);
     }
 }
