@@ -1,0 +1,54 @@
+﻿@using UniversityLibrarySystem.Service.Dtos
+@model StudentCreateDto
+
+@{
+    ViewBag.Title = "Create";
+}
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <form id="studentForm" asp-controller="Student" asp-action="Create" method="post" class="needs-validation" novalidate>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" name="Name" placeholder="Enter the student's name:" maxlength="100" required>
+                    <div class="invalid-feedback">
+                        Please provide a name (maximum length 100 characters).
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="address" class="form-label">Address</label>
+                    <input type="text" class="form-control" id="address" name="Address" placeholder="Enter the student's address:" maxlength="100" required>
+                    <div class="invalid-feedback">
+                        Please provide an address (maximum length 100 characters).
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="Email" placeholder="name@example.com" maxlength="100" required>
+                    <div class="invalid-feedback">
+                        Please provide an email (maximum length 100 characters).
+                    </div>
+                </div>
+                <button class="btn btn-primary" type="submit" disabled>Save student info</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Enable submit button only if form is valid
+    var form = document.getElementById('studentForm');
+    form.addEventListener('input', function () {
+        var isValid = form.checkValidity();
+        document.querySelector('button[type="submit"]').disabled = !isValid;
+    });
+
+    // Add character limit feedback for input fields with maxlength attribute
+    var inputs = document.querySelectorAll('input[maxlength]');
+    inputs.forEach(function (input) {
+        var charLimitFeedback = input.parentNode.querySelector('.char-limit-feedback');
+        input.addEventListener('input', function () {
+            charLimitFeedback.style.display = input.value.length > input.maxLength ? 'block' : 'none';
+        });
+    });
+</script>

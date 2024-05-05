@@ -2,7 +2,7 @@
 
 namespace UniversityLibrarySystem.Service.Interfaces;
 
-internal interface IStudentService
+public interface IStudentService
 {
     public Task<int> CreateStudentAsync(StudentCreateDto studentCreateDto);
 }

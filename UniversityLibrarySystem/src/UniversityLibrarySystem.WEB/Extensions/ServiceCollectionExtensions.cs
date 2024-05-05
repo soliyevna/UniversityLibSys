@@ -3,6 +3,8 @@ using UniversityLibrarySystem.DataAccess.Interfaces;
 using UniversityLibrarySystem.DataAccess.Interfaces.Common;
 using UniversityLibrarySystem.DataAccess.Repositories;
 using UniversityLibrarySystem.DataAccess.Repositories.Common;
+using UniversityLibrarySystem.Service.Interfaces;
+using UniversityLibrarySystem.Service.Services;
 
 namespace UniversityLibrarySystem.WEB.Extensions;
 
@@ -26,5 +28,11 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IUnitOfWork,  UnitOfWork>();
         services.AddScoped<IStudentRepository, StudentRepository>();
         services.AddScoped<IBookRepository, BookRepository>();
+    }
+
+    public static void AddServices(this IServiceCollection services)
+    {
+        services.AddScoped<IStudentService, StudentService>();
+        services.AddAutoMapper(typeof(MappingConfiguration));
     }
 }
