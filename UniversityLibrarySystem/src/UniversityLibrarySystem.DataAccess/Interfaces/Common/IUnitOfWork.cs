@@ -15,6 +15,9 @@ public interface IUnitOfWork
     /// </summary>
     public IBookRepository BookRepository { get; }
 
+    public IPublisherRepository PublisherRepository { get; }
+    public IGenreRepository GenreRepository { get; }
+
     /// <summary>
 	/// Saves entities which are changed their state from <see cref="EntityState.Unchanged"/> to other state from <see cref="EntityState"/>
 	/// </summary>

@@ -28,11 +28,14 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IUnitOfWork,  UnitOfWork>();
         services.AddScoped<IStudentRepository, StudentRepository>();
         services.AddScoped<IBookRepository, BookRepository>();
+        services.AddScoped<IPublisherRepository, PublisherRepository>();
+        services.AddScoped<IGenreRepository, GenreRepository>();
     }
 
     public static void AddServices(this IServiceCollection services)
     {
         services.AddScoped<IStudentService, StudentService>();
+        services.AddScoped<IBookService, BookService>();
         services.AddAutoMapper(typeof(MappingConfiguration));
     }
 }

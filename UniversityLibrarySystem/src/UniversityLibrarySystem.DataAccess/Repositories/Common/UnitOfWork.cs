@@ -22,6 +22,8 @@ public class UnitOfWork: IUnitOfWork, IDisposable
         this._dataContext = dataContext;
         this.StudentRepository = new StudentRepository(_dataContext);
         this.BookRepository = new BookRepository(_dataContext);
+        this.PublisherRepository = new PublisherRepository(_dataContext);
+        this.GenreRepository = new GenreRepository(_dataContext);
     }
 
     /// <inheritdoc/>
@@ -29,6 +31,9 @@ public class UnitOfWork: IUnitOfWork, IDisposable
 
     /// <inheritdoc/>
     public IBookRepository BookRepository { get; }
+
+    public IPublisherRepository PublisherRepository { get; }
+    public IGenreRepository GenreRepository { get; }    
 
     /// <inheritdoc/>
     public async Task SaveAsync()

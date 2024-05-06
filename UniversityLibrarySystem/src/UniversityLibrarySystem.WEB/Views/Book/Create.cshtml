@@ -1,0 +1,104 @@
+﻿@using UniversityLibrarySystem.Service.Dtos
+@model BookCreateDto
+
+@{
+    ViewBag.Title = "Create";
+}
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <form id="bookForm" asp-controller="Book" asp-action="Create" method="post" class="needs-validation" novalidate>
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title" name="Title" placeholder="Enter the book's title:" maxlength="100" required>
+                    <div class="invalid-feedback">
+                        Please provide a title (maximum length 100 characters).
+                    </div>
+                </div>
+               
+                <div class="mb-3">
+                    <label for="publicationDate" class="form-label">Publication Date</label>
+                    <input type="date" class="form-control" id="publicationDate" name="PublicationDate" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid publication date.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="genre" class="form-label">Genre</label>
+                    <select id="genre" name="Genre" class="form-control" required>
+                        @foreach (var genre in ViewBag.genresList)
+                        {
+                            <option value="@genre.Id">@genre.Name</option>
+                        }
+                    </select>
+                    <div class="invalid-feedback">
+                        Please select or enter a genre.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="publisherName" class="form-label">Publisher Name</label>
+                    <select id="publisherName" name="PublisherName" class="form-control" required>
+                        <option value="">Select or type publisher name</option>
+                        @foreach (var publisher in ViewBag.publishersList)
+                        {
+                            <option value="@publisher.Id">@publisher.Name</option>
+                        }
+                    </select>
+                    <div class="invalid-feedback">
+                        Please select or enter a publisher name.
+                    </div>
+                </div>
+                <button class="btn btn-primary" type="submit" disabled>Save book info</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Enable submit button only if form is valid
+    var form = document.getElementById('bookForm');
+    form.addEventListener('input', function () {
+        var isValid = form.checkValidity();
+        document.querySelector('button[type="submit"]').disabled = !isValid;
+    });
+
+    // Add character limit feedback for input fields with maxlength attribute
+    var inputs = document.querySelectorAll('input[maxlength]');
+    inputs.forEach(function (input) {
+        var charLimitFeedback = input.parentNode.querySelector('.char-limit-feedback');
+        input.addEventListener('input', function () {
+            charLimitFeedback.style.display = input.value.length > input.maxLength ? 'block' : 'none';
+        });
+    });
+</script>
+
+<script>
+    var publisherInput = document.getElementById('publisherName');
+
+    publisherInput.addEventListener('input', function () {
+        var inputText = publisherInput.value.toLowerCase();
+        var options = publisherInput.querySelectorAll('option');
+
+        // If input text is not empty and there are no matching options, create a new option with the input text
+        var matched = false;
+        options.forEach(function (option) {
+            var optionText = option.textContent.toLowerCase();
+            if (optionText.includes(inputText)) {
+                matched = true;
+            }
+        });
+        if (inputText.trim() !== '' && !matched) {
+            var newOption = document.createElement('option');
+            newOption.textContent = inputText;
+            publisherInput.appendChild(newOption);
+        }
+    });
+
+    var form = document.getElementById('bookForm');
+    form.addEventListener('input', function () {
+        var isValid = form.checkValidity();
+        document.querySelector('button[type="submit"]').disabled = !isValid;
+    });
+</script>
