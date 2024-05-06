@@ -1,6 +1,31 @@
 ﻿@using UniversityLibrarySystem.Domain.Entites;
 @model List<Student>;
 
+<!-- Modal HTML -->
+<div id="confirmDeleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalTitle">Confirm Delete</h5>
+                <a asp-controller="Student" asp-action="Index">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </a>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this student?</p>
+            </div>
+            <div class="modal-footer">
+                <a asp-controller="Student" asp-action="Index">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </a>
+                <button type="button" class="btn btn-danger" id="confirmDeleteButton">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container mt-5">
     <h2>Student List</h2>
     <table class="table">
@@ -29,7 +54,7 @@
                             <a asp-controller="Student" asp-action="Update" asp-route-id="@student.Id">
                                 <button type="button" class="btn btn-primary">Update</button>
                             </a>
-                            <button type="button" class="btn btn-danger">Delete</button>
+                            <button type="button" class="btn btn-danger" onclick="confirmDelete('@student.Id')">Delete</button>
                         </td>
                     </tr>
                 }
@@ -37,4 +62,31 @@
         </tbody>
     </table>
 </div>
+
 <!-- Bootstrap JS (optional if you need to use Bootstrap JavaScript features) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+@section Scripts {
+    <script>
+        function confirmDelete(studentId) {
+            $('#confirmDeleteModal').modal('show');
+            $('#confirmDeleteButton').click(function () {
+                // Perform the delete action
+                $.ajax({
+                    url: '/Student/Delete',
+                    type: 'DELETE',
+                    data: { id: studentId },
+                    success: function (result) {
+                        // Redirect to the index page after successful delete
+                        window.location.href = '/Student/Index';
+                    },
+                    error: function () {
+                        // Handle errors if any
+                        console.log('Error occurred while deleting student.');
+                    }
+                });
+            });
+        }
+    </script>
+}

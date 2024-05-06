@@ -67,18 +67,17 @@ public class StudentController : Controller
         if(student != null)
         {
             await _studentService.UpdateAsync(student.Id, student);
-            //return await Update(student.Id);
             return RedirectToAction("Index", "Student");
         }
         return await Index();
     }
 
-    [HttpGet("delete")]
+    [HttpDelete("delete")]
     [Route("Student/Delete")]
-    public async Task<ViewResult> Delete(int id)
+    public async Task<IActionResult> DeleteStudentAsync(int id)
     {
-        var student = await _unitOfWork.StudentRepository.GetById(id);
-        ViewBag.studentId = student.Id;
-        return View("Delete", student);
+        _unitOfWork.StudentRepository.Delete(id);
+        await _unitOfWork.SaveAsync();
+        return Ok();
     }
 }
