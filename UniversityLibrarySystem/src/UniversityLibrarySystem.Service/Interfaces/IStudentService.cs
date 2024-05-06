@@ -7,4 +7,5 @@ public interface IStudentService
 {
     public Task<int> CreateStudentAsync(StudentCreateDto studentCreateDto);
     public Task<List<Student>> GetAllAsync();
+    public Task UpdateAsync(int id, Student student); 
 }

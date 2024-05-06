@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using UniversityLibrarySystem.DataAccess.Interfaces.Common;
 using UniversityLibrarySystem.Domain.Entites;
 using UniversityLibrarySystem.Service.Dtos;
 using UniversityLibrarySystem.Service.Interfaces;
@@ -9,16 +10,13 @@ namespace UniversityLibrarySystem.WEB.Controllers.Students;
 public class StudentController : Controller
 {
     private readonly IStudentService _studentService;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public StudentController(IStudentService studentService)
+    public StudentController(IStudentService studentService, IUnitOfWork unitOfWork)
     {
         this._studentService = studentService;
+        this._unitOfWork = unitOfWork;
     }
-
-    /*public IActionResult Index()
-    {
-        return View();
-    }*/
 
     [HttpGet("create")]
     public ViewResult Create()
@@ -34,9 +32,9 @@ public class StudentController : Controller
         if(ModelState.IsValid)
         {
             int res = await _studentService.CreateStudentAsync(studentCreateDto);
-            if(res > 0)
+            if(res == 0)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Student");
             }
             else
             {
@@ -51,5 +49,36 @@ public class StudentController : Controller
     {
         List<Student> students = await _studentService.GetAllAsync();
         return View(students);
+    }
+
+    [HttpGet("update")]
+    public async Task<ViewResult> Update(int id)
+    {
+        var student = await _unitOfWork.StudentRepository.GetById(id);
+        ViewBag.studentId = student.Id;
+        return View("Update", student);
+    }
+
+    [HttpPost("update")]
+    [Route("Student/Update")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UpdateStudentInfoAsync(Student student)
+    {
+        if(student != null)
+        {
+            await _studentService.UpdateAsync(student.Id, student);
+            //return await Update(student.Id);
+            return RedirectToAction("Index", "Student");
+        }
+        return await Index();
+    }
+
+    [HttpGet("delete")]
+    [Route("Student/Delete")]
+    public async Task<ViewResult> Delete(int id)
+    {
+        var student = await _unitOfWork.StudentRepository.GetById(id);
+        ViewBag.studentId = student.Id;
+        return View("Delete", student);
     }
 }

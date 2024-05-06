@@ -29,4 +29,10 @@ public class StudentService : IStudentService
         var res = _unitOfWork.StudentRepository.GetAllAsync();
         return res;
     }
+
+    public async Task UpdateAsync(int id, Student student)
+    {
+        _unitOfWork.StudentRepository.Update(student);
+        await _unitOfWork.SaveAsync();
+    }
 }
