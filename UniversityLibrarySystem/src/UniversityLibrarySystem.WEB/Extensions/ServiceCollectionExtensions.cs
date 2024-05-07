@@ -30,6 +30,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IBookRepository, BookRepository>();
         services.AddScoped<IPublisherRepository, PublisherRepository>();
         services.AddScoped<IGenreRepository, GenreRepository>();
+        services.AddScoped<IAuthorRepository, AuthorRepository>();
     }
 
     public static void AddServices(this IServiceCollection services)

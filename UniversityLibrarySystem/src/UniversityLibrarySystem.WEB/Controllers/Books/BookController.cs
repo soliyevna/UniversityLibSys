@@ -30,8 +30,10 @@ public class BookController : Controller
     {
         var genresList = await _unitOfWork.GenreRepository.GetAllAsync();
         var publishersList = await _unitOfWork.PublisherRepository.GetAllAsync();
+        var authorsList = await _unitOfWork.AuthorRepository.GetAllAsync();
         ViewBag.genresList = genresList;
         ViewBag.publishersList = publishersList;
+        ViewBag.authorsList = authorsList;
         return View("Create");
     }
 

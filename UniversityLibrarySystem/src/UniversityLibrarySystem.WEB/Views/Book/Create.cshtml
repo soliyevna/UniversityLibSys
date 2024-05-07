@@ -25,8 +25,23 @@
                 </div>
 
                 <div class="mb-3">
+                    <label for="author" class="form-label">Author</label>
+                    <select id="author" name="Author" class="form-control" required>
+                        <option value="">Select or type author</option>
+                        @foreach (var author in ViewBag.authorsList)
+                        {
+                            <option value="@author.Id">@author.Name</option>
+                        }
+                    </select>
+                    <div class="invalid-feedback">
+                        Please select or enter an author.
+                    </div>
+                </div>
+
+                <div class="mb-3">
                     <label for="genre" class="form-label">Genre</label>
                     <select id="genre" name="Genre" class="form-control" required>
+                        <option value="">Select or type genre name</option>
                         @foreach (var genre in ViewBag.genresList)
                         {
                             <option value="@genre.Id">@genre.Name</option>

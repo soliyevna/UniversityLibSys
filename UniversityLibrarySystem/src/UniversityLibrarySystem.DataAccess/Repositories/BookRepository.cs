@@ -1,4 +1,5 @@
-﻿using UniversityLibrarySystem.DataAccess.DbContexts;
+﻿using Microsoft.EntityFrameworkCore;
+using UniversityLibrarySystem.DataAccess.DbContexts;
 using UniversityLibrarySystem.DataAccess.Interfaces;
 using UniversityLibrarySystem.DataAccess.Repositories.Common;
 using UniversityLibrarySystem.Domain.Entites;
@@ -17,5 +18,11 @@ public class BookRepository: BaseRepository<Book>, IBookRepository
     public BookRepository(DataContext dataContext): base(dataContext)
     {
         
+    }
+
+    public async Task<List<Book>> GetAllAsync()
+    {
+        var books = await Collection.AsNoTracking().ToListAsync();
+        return books;
     }
 }

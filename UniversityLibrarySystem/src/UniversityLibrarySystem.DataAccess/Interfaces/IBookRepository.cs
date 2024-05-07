@@ -8,4 +8,5 @@ namespace UniversityLibrarySystem.DataAccess.Interfaces;
 /// </summary>
 public interface IBookRepository: IBaseRepository<Book>
 {
+    public Task<List<Book>> GetAllAsync();
 }

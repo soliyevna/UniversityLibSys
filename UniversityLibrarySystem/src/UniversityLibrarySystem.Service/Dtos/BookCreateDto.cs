@@ -19,5 +19,8 @@ public class BookCreateDto
     /// <summary>
     /// Gets or sets the name of the publisher that published the book.
     /// </summary>
+    public int PublisherId { get; set; }
+    public int AutherId {  get; set; }
+    public List<int> Genres { get; set; }
     public string PublisherName { get; set; } = string.Empty;
 }
