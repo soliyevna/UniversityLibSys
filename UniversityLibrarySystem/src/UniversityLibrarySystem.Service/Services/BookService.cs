@@ -21,7 +21,7 @@ public class BookService : IBookService
             PublicationDate = bookCreateDto.PublicationDate,
         };
 
-        var doesAnyPublisherExistWithThisName = await _unitOfWork.PublisherRepository.DoesExist(book.Title);
+        var doesAnyPublisherExistWithThisName = await _unitOfWork.PublisherRepository.DoesExist(bookCreateDto.PublisherName);
        
         bool doesExist = doesAnyPublisherExistWithThisName.Item1;
         int publisherId = doesAnyPublisherExistWithThisName.Item2;
@@ -36,8 +36,8 @@ public class BookService : IBookService
             {
                 Name = bookCreateDto.PublisherName
             };
-            _unitOfWork.PublisherRepository.Create(publisher);
-            book.PublisherId = publisher.Id;
+            int id = _unitOfWork.PublisherRepository.Create(publisher);
+            book.PublisherId = id;
         }
 
         _unitOfWork.BookRepository.Create(book);

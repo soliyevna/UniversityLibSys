@@ -18,7 +18,7 @@ public class PublisherRepository: BaseRepository<Publisher>, IPublisherRepositor
         var publisher = await Collection.Where(p => p.Name.ToLower() == publisherName.ToLower()).FirstOrDefaultAsync();
         if(publisher == null)
             return (false, 0);
-        else return (true, 1);
+        else return (true, publisher.Id);
     }
 
     public async Task<List<Publisher>> GetAllAsync()
